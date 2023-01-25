@@ -15,4 +15,4 @@ export default function sendChat(data) {
     timestamp: db.timestamp,
     uid: db.uid,
   });
-}
+};
