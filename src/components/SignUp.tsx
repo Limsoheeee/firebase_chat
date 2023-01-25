@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { firebaseAuth, createUserWithEmailAndPassword } from '../services/firebaseConfig';
+import { auth, createUserWithEmailAndPassword } from '../services/firebaseConfig';
 
 
 const SignUp = () => {
@@ -22,7 +22,7 @@ const SignUp = () => {
     if (email !== "" && password !== "") {
       try {
         const user = await createUserWithEmailAndPassword(
-            firebaseAuth,
+          auth,
             email, password);
             alert("회원가입이 되었습니다.");
             navigate("/");
