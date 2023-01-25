@@ -1,23 +1,34 @@
-import { auth } from "../services/firebaseConfig";
+import { auth,database,db,onAuthStateChanged } from "../services/firebaseConfig";
+import { getDatabase, ref, set } from "firebase/database";
 import  sendChat  from "../helpers/database"
 import { useState } from "react";
 
 const Chat = () => {
+  const user = auth?.currentUser;
+  const db = getDatabase();
+  console.log("getDatabase===>",db)
   const [msg, setMsg] = useState();
 
   const handleOnChange = (e: any) => {
     setMsg(e.target.value);
   };
-  const handleSumbit = async (e: any) => {
+  const handleSumbit = async (e: any ) => {
     e.preventDefault();
     console.log(msg);
-    try {
-      await sendChat({
-        message: msg,
-        timestamp: Date.now(),
-        uid: auth().currentUser.uid,
-      });
-    } catch (error) {
+    console.log(" auth===>", auth);
+    try {     
+      await set(ref(db, 'users/' + user ), {
+    message: msg,
+    timestamp: Date.now(),
+    user:user,
+  });
+}
+      // await sendChat({
+      //   message: msg,
+      //   timestamp: Date.now(),
+      //   uid:user,
+      // });
+    catch (error) {
       console.log(error);
     }
   };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  firebaseAuth,
+  auth,
   signInWithEmailAndPassword,
 } from "../services/firebaseConfig";
 
@@ -24,13 +24,13 @@ const navigate = useNavigate();
     if (email !== "" && password !== "") {
       try {
         const userData = await signInWithEmailAndPassword(
-          firebaseAuth,
+          auth,
           email,
           password
         ).then((userCredential) => {
           const user = userCredential.user;
           alert("로그인 되었습니다.")
-          navigate("/")
+          navigate("/chat")
           console.log("로그인user===>", user);
         });
       } catch (error) {
